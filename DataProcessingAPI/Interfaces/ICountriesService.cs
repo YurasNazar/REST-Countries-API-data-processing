@@ -4,6 +4,6 @@ namespace DataProcessingAPI.Interfaces
 {
     public interface ICountriesService
     {
-        Task<ServiceResult<List<Country>>> GetCountries();
+        Task<ServiceResult<List<Country>>> GetCountries(string name);
     }
 }

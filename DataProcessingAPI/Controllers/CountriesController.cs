@@ -16,16 +16,16 @@ namespace DataProcessingAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="param1"></param>
+        /// <param name="name">Value to filter by country `name/common`.</param>
         /// <param name="param2"></param>
         /// <param name="param3"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get(string param1, int? param2, string param3)
+        public async Task<IActionResult> Get(string name, int? param2, string param3)
         {
             try
             {
-                var result = await _countriesService.GetCountries();
+                var result = await _countriesService.GetCountries(name);
                 if (result.Success)
                 {
                     return Ok(result.Data);

@@ -1,0 +1,96 @@
+User
+Filter .NET collection of object by string property, without using any libraries
+
+ChatGPT
+You can filter a .NET collection of objects by a string property using the built-in System.Linq namespace. Here's an example of how you can do this:
+
+Assume you have a class named Person as follows:
+
+csharp
+Copy code
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    // other properties...
+}
+And you have a List<Person>:
+
+csharp
+Copy code
+List<Person> people = new List<Person>
+{
+    new Person { Name = "Alice", Age = 30 },
+    new Person { Name = "Bob", Age = 35 },
+    new Person { Name = "Charlie", Age = 40 },
+    // other people...
+};
+Now, you want to filter this list to find people whose name is "Alice". You can do this with the Where method from the System.Linq namespace:
+
+csharp
+Copy code
+using System.Linq;
+
+// other code...
+
+List<Person> filteredPeople = people.Where(p => p.Name == "Alice").ToList();
+This will give you a new list (filteredPeople) that only contains the people from the people list whose Name is "Alice".
+
+Note that the Where method does not modify the original list. It creates a new sequence of elements that satisfy the condition specified by the lambda expression (p => p.Name == "Alice" in this case).
+
+
+
+
+
+User
+.Contains() LINQ ignore casing
+ChatGPT
+You can use the .Contains() method in LINQ and ignore casing by setting a StringComparer with StringComparison.OrdinalIgnoreCase or by using the String.Equals() method with StringComparison.OrdinalIgnoreCase parameter. Here's an example:
+
+Assume you have the same List<Person>:
+
+csharp
+Copy code
+List<Person> people = new List<Person>
+{
+    new Person { Name = "Alice", Age = 30 },
+    new Person { Name = "Bob", Age = 35 },
+    new Person { Name = "Charlie", Age = 40 },
+    // other people...
+};
+And you want to filter this list to find people whose name contains "ali" (case-insensitive). Here are two ways to do this:
+
+Using String.Contains():
+csharp
+Copy code
+using System.Linq;
+
+// other code...
+
+List<Person> filteredPeople = people
+    .Where(p => p.Name.Contains("ali", StringComparison.OrdinalIgnoreCase))
+    .ToList();
+Using String.Equals():
+csharp
+Copy code
+using System.Linq;
+
+// other code...
+
+List<Person> filteredPeople = people
+    .Where(p => p.Name.Equals("ali", StringComparison.OrdinalIgnoreCase))
+    .ToList();
+Both methods will give you a new list (filteredPeople) that only contains the people from the people list whose Name contains "ali", ignoring case.
+
+Please note that String.Contains with StringComparison is available starting from .NET Core 2.1 and .NET Standard 2.1. If you are using .NET Framework, or an older version of .NET Core or .NET Standard, you will need to use String.IndexOf() as it allows for StringComparison, like so:
+
+csharp
+Copy code
+using System.Linq;
+
+// other code...
+
+List<Person> filteredPeople = people
+    .Where(p => p.Name.IndexOf("ali", StringComparison.OrdinalIgnoreCase) >= 0)
+    .ToList();
+This will give you the same result, as String.IndexOf() returns -1 if the substring is not found. Therefore, checking if it returns a value >= 0 will ensure that the substring is in the string.

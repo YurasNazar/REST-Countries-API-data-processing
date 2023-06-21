@@ -1,4 +1,5 @@
 ﻿using DataProcessingAPI.Interfaces;
+using DataProcessingAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataProcessingAPI.Controllers
@@ -14,13 +15,13 @@ namespace DataProcessingAPI.Controllers
         }
 
         /// <summary>
-        /// Retrieves countries collection based on provided filters, sort and pagination criterias
+        /// Retrieves countries data collection based on provided filters, sort and pagination criterias
         /// </summary>
         /// <param name="name">Value to filter by country `name/common` field.</param>
         /// <param name="population">Value to filter by country `population` field.</param>
         /// <param name="orderDirection">Value to specify order direction for 'name/common`field'</param>
         /// <param name="take">Value to specify number of first n' records to return</param>
-        /// <returns></returns>
+        /// <returns>Returns list filtered, sorted and paginated list of <see cref="Country"/> objects</returns>
         [HttpGet]
         public async Task<IActionResult> Get(string? name, int? population, string? orderDirection, int? take)
         {

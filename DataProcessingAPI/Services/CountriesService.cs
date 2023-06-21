@@ -12,7 +12,7 @@ namespace DataProcessingAPI.Services
             _configuration = configuration;
         }
 
-        public async Task<ServiceResult<List<Country>>> GetCountries(string? name, int? population)
+        public async Task<ServiceResult<List<Country>>> GetCountries(string? name, int? population, string? orderDirection)
         {
             var client = new HttpClient();
 
@@ -24,6 +24,7 @@ namespace DataProcessingAPI.Services
 
                 data = FilterCountriesByName(name, data);
                 data = FilterCountriesByPopulation(population, data);
+                data = SortCountriesByName(orderDirection, data);
 
                 return ServiceResult<List<Country>>.CreateSuccess(data);
             }
@@ -59,9 +60,28 @@ namespace DataProcessingAPI.Services
                 return new List<Country> { };
             }
 
-            return data
-                .Where(x => x.Population/1000000 < population.Value)
-                .ToList();
+            return data.Where(x => x.Population/1000000 < population.Value).ToList();
+        }
+
+        public List<Country> SortCountriesByName(string? order, List<Country>? data)
+        {
+            if (string.IsNullOrWhiteSpace(order) || (!order.Equals("ascend") && !order.Equals("descend")))
+            {
+                return data ?? new List<Country> { };
+            }
+
+            if (data == null)
+            {
+                return new List<Country> { };
+            }
+
+            if (order.Equals("descend")) 
+            {
+                return data.OrderByDescending(x => x.Name?.Common).ToList();
+
+            }
+
+            return data.OrderBy(x => x.Name?.Common).ToList();
         }
     }
 }

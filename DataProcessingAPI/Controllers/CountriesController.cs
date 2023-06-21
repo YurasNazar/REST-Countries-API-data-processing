@@ -16,16 +16,16 @@ namespace DataProcessingAPI.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="name">Value to filter by country `name/common` property.</param>
-        /// <param name="population">Value to filter by country `population` property.</param>
-        /// <param name="param3"></param>
+        /// <param name="name">Value to filter by country `name/common` field.</param>
+        /// <param name="population">Value to filter by country `population` field.</param>
+        /// <param name="orderDirection">Value to specify order direction for 'name/common`field'</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Get(string? name, int? population, string param3)
+        public async Task<IActionResult> Get(string? name, int? population, string? orderDirection)
         {
             try
             {
-                var result = await _countriesService.GetCountries(name, population);
+                var result = await _countriesService.GetCountries(name, population, orderDirection);
                 if (result.Success)
                 {
                     return Ok(result.Data);

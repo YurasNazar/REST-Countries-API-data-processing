@@ -1,22 +1,25 @@
 ﻿using DataProcessingAPI.Interfaces;
 using DataProcessingAPI.Models;
+using DataProcessingAPI.Models.Models;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace DataProcessingAPI.Services
 {
     public class CountriesService : ICountriesService
     {
-        private readonly IConfiguration _configuration;
-        public CountriesService(IConfiguration configuration) 
+        private readonly AppSettings _appSettings;
+
+        public CountriesService(IOptions<AppSettings> appSettingsAccessor) 
         {
-            _configuration = configuration;
+            _appSettings = appSettingsAccessor.Value;
         }
 
         public async Task<ServiceResult<List<Country>>> GetCountries(string? name, int? population, string? orderDirection, int? take)
         {
             var client = new HttpClient();
 
-            var response = await client.GetAsync(_configuration.GetValue<string>("AppSettings:RESTCountriesAPIUrl"));
+            var response = await client.GetAsync(_appSettings.RESTCountriesAPIUrl);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();

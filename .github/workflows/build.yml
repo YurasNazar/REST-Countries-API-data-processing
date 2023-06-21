@@ -44,5 +44,9 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"YurasNazar_REST-Countries-API-data-processing" /o:"yurasnazar" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet build ./DataProcessingAPI.Models/DataProcessingAPI.Models.csproj
+          dotnet build ./DataProcessingAPI.Implementation/DataProcessingAPI.Implementation.csproj
+          dotnet build ./DataProcessingAPI.Tests/DataProcessingAPI.Tests.csproj
           dotnet build ./DataProcessingAPI/DataProcessingAPI.csproj
+          dotnet test ./DataProcessingAPI.Tests/DataProcessingAPI.Tests.csproj
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

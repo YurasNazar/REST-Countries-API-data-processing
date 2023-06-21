@@ -10,15 +10,6 @@ namespace DataProcessingAPI.Tests
     [TestClass]
     public class CountriesServiceTests
     {
-        private readonly CountriesService _countriesService;
-        private Mock<IOptions<AppSettings>> _configuration;
-
-        public CountriesServiceTests()
-        {
-            _configuration = new Mock<IOptions<AppSettings>>();
-            _countriesService = new CountriesService(_configuration.Object);
-        }
-
         [TestMethod]
         public void FilterCountriesByName_NullName_ReturnsAllData()
         {
@@ -31,7 +22,7 @@ namespace DataProcessingAPI.Tests
             string? name = null;
 
             // Act
-            var result = _countriesService.FilterCountriesByName(name, data);
+            var result = CountriesService.FilterCountriesByName(name, data);
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -45,7 +36,7 @@ namespace DataProcessingAPI.Tests
             string name = "Canada";
 
             // Act
-            var result = _countriesService.FilterCountriesByName(name, data);
+            var result = CountriesService.FilterCountriesByName(name, data);
 
             // Assert
             Assert.AreEqual(0, result.Count);
@@ -63,7 +54,7 @@ namespace DataProcessingAPI.Tests
             string name = "Canada";
 
             // Act
-            var result = _countriesService.FilterCountriesByName(name, data);
+            var result = CountriesService.FilterCountriesByName(name, data);
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -82,7 +73,7 @@ namespace DataProcessingAPI.Tests
             string name = "";
 
             // Act
-            var result = _countriesService.FilterCountriesByName(name, data);
+            var result = CountriesService.FilterCountriesByName(name, data);
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -100,7 +91,7 @@ namespace DataProcessingAPI.Tests
             string name = "canada";
 
             // Act
-            var result = _countriesService.FilterCountriesByName(name, data);
+            var result = CountriesService.FilterCountriesByName(name, data);
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -119,7 +110,7 @@ namespace DataProcessingAPI.Tests
             int? population = null;
 
             // Act
-            var result = _countriesService.FilterCountriesByPopulation(population, data);
+            var result = CountriesService.FilterCountriesByPopulation(population, data);
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -133,7 +124,7 @@ namespace DataProcessingAPI.Tests
             int? population = 40;
 
             // Act
-            var result = _countriesService.FilterCountriesByPopulation(population, data);
+            var result = CountriesService.FilterCountriesByPopulation(population, data);
 
             // Assert
             Assert.AreEqual(0, result.Count);
@@ -151,7 +142,7 @@ namespace DataProcessingAPI.Tests
             int? population = 350;
 
             // Act
-            var result = _countriesService.FilterCountriesByPopulation(population, data);
+            var result = CountriesService.FilterCountriesByPopulation(population, data);
 
             // Assert
             Assert.AreEqual(1, result.Count);
@@ -170,7 +161,7 @@ namespace DataProcessingAPI.Tests
             int? population = 10; // Very low population to check for no countries matching
 
             // Act
-            var result = _countriesService.FilterCountriesByPopulation(population, data);
+            var result = CountriesService.FilterCountriesByPopulation(population, data);
 
             // Assert
             Assert.AreEqual(0, result.Count);
@@ -188,7 +179,7 @@ namespace DataProcessingAPI.Tests
             string? order = null;
 
             // Act
-            var result = _countriesService.SortCountriesByName(order, data);
+            var result = CountriesService.SortCountriesByName(order, data);
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -208,7 +199,7 @@ namespace DataProcessingAPI.Tests
             string order = "random";
 
             // Act
-            var result = _countriesService.SortCountriesByName(order, data);
+            var result = CountriesService.SortCountriesByName(order, data);
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -224,7 +215,7 @@ namespace DataProcessingAPI.Tests
             string order = "ascend";
 
             // Act
-            var result = _countriesService.SortCountriesByName(order, data);
+            var result = CountriesService.SortCountriesByName(order, data);
 
             // Assert
             Assert.AreEqual(0, result.Count);
@@ -242,7 +233,7 @@ namespace DataProcessingAPI.Tests
             string order = "ascend";
 
             // Act
-            var result = _countriesService.SortCountriesByName(order, data);
+            var result = CountriesService.SortCountriesByName(order, data);
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -262,7 +253,7 @@ namespace DataProcessingAPI.Tests
             string order = "descend";
 
             // Act
-            var result = _countriesService.SortCountriesByName(order, data);
+            var result = CountriesService.SortCountriesByName(order, data);
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -283,7 +274,7 @@ namespace DataProcessingAPI.Tests
             int? take = null;
 
             // Act
-            var result = _countriesService.ApplyPagination(take, data);
+            var result = CountriesService.ApplyPagination(take, data);
 
             // Assert
             Assert.AreEqual(3, result.Count);
@@ -302,7 +293,7 @@ namespace DataProcessingAPI.Tests
             int? take = -3;
 
             // Act
-            var result = _countriesService.ApplyPagination(take, data);
+            var result = CountriesService.ApplyPagination(take, data);
 
             // Assert
             Assert.AreEqual(3, result.Count);
@@ -316,7 +307,7 @@ namespace DataProcessingAPI.Tests
             int? take = 2;
 
             // Act
-            var result = _countriesService.ApplyPagination(take, data);
+            var result = CountriesService.ApplyPagination(take, data);
 
             // Assert
             Assert.AreEqual(0, result.Count);
@@ -335,7 +326,7 @@ namespace DataProcessingAPI.Tests
             int? take = 2;
 
             // Act
-            var result = _countriesService.ApplyPagination(take, data);
+            var result = CountriesService.ApplyPagination(take, data);
 
             // Assert
             Assert.AreEqual(2, result.Count);

@@ -35,7 +35,7 @@ namespace DataProcessingAPI.Services
             else return ServiceResult<List<Country>>.CreateFailure("Can't reach the REST Countries API");
         }
 
-        public List<Country> FilterCountriesByName(string? name, List<Country>? data)
+        public static List<Country> FilterCountriesByName(string? name, List<Country>? data)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -52,7 +52,7 @@ namespace DataProcessingAPI.Services
                 .ToList();
         }
 
-        public List<Country> FilterCountriesByPopulation(int? population, List<Country>? data)
+        public static List<Country> FilterCountriesByPopulation(int? population, List<Country>? data)
         {
             if (!population.HasValue)
             {
@@ -67,7 +67,7 @@ namespace DataProcessingAPI.Services
             return data.Where(x => x.Population/1000000 < population.Value).ToList();
         }
 
-        public List<Country> SortCountriesByName(string? order, List<Country>? data)
+        public static List<Country> SortCountriesByName(string? order, List<Country>? data)
         {
             if (string.IsNullOrWhiteSpace(order) || (!order.Equals("ascend") && !order.Equals("descend")))
             {
@@ -88,7 +88,7 @@ namespace DataProcessingAPI.Services
             return data.OrderBy(x => x.Name?.Common).ToList();
         }
 
-        public List<Country> ApplyPagination(int? take, List<Country>? data)
+        public static List<Country> ApplyPagination(int? take, List<Country>? data)
         {
             if (!take.HasValue || take.Value < 0)
             {

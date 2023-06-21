@@ -14,7 +14,7 @@ namespace DataProcessingAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Retrieves countries collection based on provided filters, sort and pagination criterias
         /// </summary>
         /// <param name="name">Value to filter by country `name/common` field.</param>
         /// <param name="population">Value to filter by country `population` field.</param>
